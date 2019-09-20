@@ -38,11 +38,7 @@ class Counter extends React.Component {
 
 function FnCounter(props) {
     const { counterValue } = props
-    const [value, setValue] = React.useState(counterValue);
-
-    //   React.useEffect( ()=>{
-    //    fetch('https://dog.ceo/api/breeds/list/all').then(res => res.json()).then(console.log)
-    //   })
+    const [value, setValue] = React.useState(0);
     return (
         <div>
             <div>
@@ -55,7 +51,28 @@ function FnCounter(props) {
         </div>
     )
 }
+function Timer(props) {
+    const { counterValue } = props
+    const [value, setValue] = React.useState(0);
+    const [delay, setDelay] = React.useState(1000)
 
+    React.useEffect(() => {
+        const timer = setInterval(() => setValue(value + 1), delay)
+        return () => clearInterval(timer)
+    }, [value, delay])
+    return (
+        <div>
+            <div>
+                <h1 className="count">{value}</h1>
+                <form action="" onSubmit={(e) => { e.preventDefault(); setDelay(e.target.elements[0].value) }}>
+                    <label htmlFor="delay">Change Delay
+                    <input type="number" />
+                    </label>
+                </form>
+            </div>
+        </div >
+    )
+}
 
 const App = (props) => {
     const [counters, setCounters] = React.useState([]);
@@ -128,7 +145,7 @@ class AppClass extends React.Component {
 // <FnCounter counterValue={counter.value} />
 
 
-ReactDOM.render(<div><AppClass /></div>, document.getElementById('root'))
+ReactDOM.render(<div><AppClass /> <Timer /></div>, document.getElementById('root'))
 
 
 
